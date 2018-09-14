@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Phonemizer.h"
-//#include "QuranInfo.h"
+#include "QuranInfo.h"
 #include "Phonemes.h"
 using namespace std;
 
