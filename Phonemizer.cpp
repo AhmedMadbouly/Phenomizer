@@ -1,6 +1,8 @@
+#include <iostream>
 #include "Phonemizer.h"
-#include "QuranInfo.h"
+//#include "QuranInfo.h"
 #include "Phonemes.h"
+using namespace std;
 
 Phonemizer::Phonemizer()
 {
@@ -11,6 +13,11 @@ Phonemizer::Phonemizer()
 	//Prepare letters phonemes map
 	for(int i = 0; i < sizeof(lettersPhonemes) / ((sizeof (string)) * 2) ; i++)
 		letterPhonemeMap[lettersPhonemes[i*2][0]] = string(lettersPhonemes[i*2+1]);
+}
+
+bool IsTashkeel(char ch) {
+	return (ch == 'َ' || ch == 'ِ' || ch == 'ُ' || ch == 'ً' || ch == 'ٍ'
+			|| ch == 'ٌ' || ch == 'ّ' || ch == 'ْ');
 }
 
 string ReplaceWord(string text, string searchWord, string targetWord)
@@ -118,7 +125,8 @@ vstring Phonemizer::TextToPhonemes(string text)
 	text = ProcessSpecialWords(text);
 
 	//Add dummy spaces!
-	text = string(3,' ') + AdjustString(text) + string(5,' ');
+	//text = string(3,' ') + AdjustString(text) + string(5,' ');
+	text = string(3,' ') + text + string(5,' ');
 	
 
 	vstring labels;
@@ -329,4 +337,19 @@ vstring Phonemizer::TextToPhonemes(string text)
 	labels.erase(labels.begin());
 
 	return labels;
+}
+
+int main(int argc, char const *argv[])
+{
+	freopen("input", "r", stdin);
+	string str;
+	cin >> str;
+	Phonemizer p;
+	vstring vec = p.TextToPhonemes(str);
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		std::cout << vec.at(i) << " ";
+	}
+	cout << "\n";
+	return 0;
 }
